@@ -1,9 +1,12 @@
+from shutil import copyfile
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 import csv
-from html.parser import HTMLParser
 from lxml import etree
-import csv
+import os
+import zipfile
+import shutil
+from pykml import parser
 
 
 class Temaxio(object):
@@ -27,35 +30,54 @@ class Temaxio(object):
         self.Name = name
 
 
-def CSVImporter(temaxia):
+def CSVImporter(items, file):
 
-    with open('temaxia.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    with open('data/CSV/' + file, 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = ['Name','FEATUREID','SBPI_ID_NO','ΚΩΔΙΚΟΣ_ΕΠΑΡΧΙΑΣ','ΚΩΔΙΚΟΣ_ΔΗΜΟΥ_ΚΟΙΝΟΤΗΤΑΣ','ΚΩΔΙΚΟΣ_ΕΝΟΡΙΑΣ','ΚΩΔΙΚΟΣ_ΤΜΗΜΑΤΟΣ','ΦΥΛΛΟ','ΣΧΕΔΙΟ','ΑΡΙΘΜΟΣ_ΤΕΜΑΧΙΟΥ','SRC_SL_CODE','ΠΗΓΗ','ΕΜΒΑΔΟ_ΤΕΜΑΧΙΟΥ','coordinates']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
-        for temaxio in temaxia:
+        for temaxio in items:
             writer.writerow({'Name': temaxio.Name, 'FEATUREID': temaxio.FEATUREID, 'SBPI_ID_NO': temaxio.SBPI_ID_NO, 'ΚΩΔΙΚΟΣ_ΕΠΑΡΧΙΑΣ': temaxio.ΚΩΔΙΚΟΣ_ΕΠΑΡΧΙΑΣ, 'ΚΩΔΙΚΟΣ_ΔΗΜΟΥ_ΚΟΙΝΟΤΗΤΑΣ': temaxio.ΚΩΔΙΚΟΣ_ΔΗΜΟΥ_ΚΟΙΝΟΤΗΤΑΣ, 'ΚΩΔΙΚΟΣ_ΕΝΟΡΙΑΣ': temaxio.ΚΩΔΙΚΟΣ_ΕΝΟΡΙΑΣ, 'ΚΩΔΙΚΟΣ_ΤΜΗΜΑΤΟΣ': temaxio.ΚΩΔΙΚΟΣ_ΤΜΗΜΑΤΟΣ, 'ΦΥΛΛΟ': temaxio.ΦΥΛΛΟ, 'ΣΧΕΔΙΟ': temaxio.ΣΧΕΔΙΟ, 'ΑΡΙΘΜΟΣ_ΤΕΜΑΧΙΟΥ': temaxio.ΑΡΙΘΜΟΣ_ΤΕΜΑΧΙΟΥ, 'SRC_SL_CODE': temaxio.SRC_SL_CODE, 'ΠΗΓΗ': temaxio.ΠΗΓΗ, 'ΕΜΒΑΔΟ_ΤΕΜΑΧΙΟΥ': temaxio.ΕΜΒΑΔΟ_ΤΕΜΑΧΙΟΥ, 'coordinates': temaxio.coordinates})
 
-def main():
-    """
-    Open the KML. Read the KML. Open a CSV file. Process a coordinate string to be a CSV row.
-    """ 
-    temaxia = []
-    tree = ET.parse('doc.xml')
-    root = tree.getroot()
-    for folder in root.iter('Folder'):
-        for placemark in folder.iter('Placemark'):
-            print(placemark.find('name').text)
-            temaxio = Temaxio(placemark.find('name').text)
-            for geometry in placemark.iter('MultiGeometry'):
-                for polygon in geometry.iter('Polygon'):
-                    for outerB in polygon.iter('outerBoundaryIs'):
-                        for ring in outerB.iter('LinearRing'):
-                            for coord in ring.iter('coordinates'):
-                                temaxio.coordinates = (coord.text)
+def copyKMZandrenametoZIP(filename):
+    sourceFile = "data/KMZ/" + filename
+    targetFile = 'data/ZIP/'+filename
+    if (os.path.isdir('data/ZIP/') == False):
+        os.makedirs('data/ZIP/')
+    copyfile(sourceFile,targetFile )
+    base = os.path.splitext(targetFile)[0]
+    os.rename(targetFile, base + ".zip")
+    return base + ".zip"
 
-            desc = placemark.find('description').text
+def unzipFile(filepath, file):
+    targetPath='data/UNZIP/'
+    targetFile = targetPath + file + '/doc.kml'
+    if (os.path.isdir(targetPath) == False):
+        os.makedirs(targetPath)
+    if (os.path.isdir(targetPath+file) == False):
+        os.makedirs(targetPath+file)
+    with zipfile.ZipFile(filepath, 'r') as zip_ref:
+        zip_ref.extractall(targetPath+file)
+    #base = os.path.splitext(targetFile)[0]
+    #os.rename(targetFile, base + ".xml")
+    return  targetFile #base + ".xml"
+
+def deleteCreated():
+    shutil.rmtree("data/ZIP")
+    shutil.rmtree('data/UNZIP')
+
+def Parser(docxml):
+    temaxia = []
+    #tree = ET.parse(docxml)
+    with open(docxml, encoding='utf-8') as f:
+        doc = parser.parse(f)
+        root = doc.getroot()   
+        for placemark in root.Document.Folder.Placemark:
+            temaxio = Temaxio(placemark.name)
+            temaxio.coordinates = (placemark.MultiGeometry.Polygon.outerBoundaryIs.LinearRing.coordinates)
+
+            desc = placemark.description.text
             table = etree.HTML(desc).find("body/table/tr/td/table")
             rows = iter(table)
             for row in rows:
@@ -97,9 +119,25 @@ def main():
                     elif (values[0] == 'ΕΜΒΑΔΟ ΤΕΜΑΧΙΟΥ'):
                         temaxio.ΕΜΒΑΔΟ_ΤΕΜΑΧΙΟΥ = values[1]
             temaxia.append(temaxio)
-    CSVImporter(temaxia)
-                
+        return temaxia
 
+def main():
+    """
+    Open the KML. Read the KML. Open a CSV file. Process a coordinate string to be a CSV row.
+    """ 
+    #file = 'ΤΕΜΑΧΙΑ_0'
+  #  file = 'ΚΤΗΡΙΑΓΚΒΔ_17'
+    try:
+        for filename in os.listdir('data/KMZ'):
+            if filename.endswith(".kmz"): 
+                zipefile = copyKMZandrenametoZIP(filename)
+              #  docxml = unzipFile(zipefile, filename)
+      #  temaxia = Parser(docxml)
+      #  CSVImporter(temaxia,file + '.csv')
+    finally:
+       # deleteCreated()
+       print("g")
+    
 
 if __name__ == "__main__":
     main()
