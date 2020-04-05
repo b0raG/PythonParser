@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document id="DLS253422_ΤΕΜΑΧΙΑ_0">
+  <name>DLS253422_ΤΕΜΑΧΙΑ_0</name>
+  <Snippet></Snippet>
+  <Style id="PolyStyle00">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff6e6e6e</color>
+      <width>0.400000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>fff5d4ba</color>
+      <outline>1</outline>
+    </PolyStyle>
+  </Style>
+  <Folder id="FeatureLayer0">
+    <name>DLS253422_ΤΕΜΑΧΙΑ_0</name>
+    <Snippet></Snippet>
+    <description><![CDATA[DLS253422_ΤΕΜΑΧΙΑ_0]]></description>
+    <Placemark id="ID_00000">
+      <name>540402</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<head>
+
+<META http-equiv="Content-Type" content="text/html">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+
+<td>540402</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+
+<tr>
+
+<td>FEATUREID</td>
+
+<td>1</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SBPI_ID_NO</td>
+
+<td>376514</td>
+
+</tr>
+
+<tr>
+
+<td>ΚΩΔΙΚΟΣ ΕΠΑΡΧΙΑΣ</td>
+
+<td>1</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>ΚΩΔΙΚΟΣ ΔΗΜΟΥ_ΚΟΙΝΟΤΗΤΑΣ</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td>ΚΩΔΙΚΟΣ ΕΝΟΡΙΑΣ</td>
+
+<td>16</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>ΚΩΔΙΚΟΣ ΤΜΗΜΑΤΟΣ</td>
+
+<td>1</td>
+
+</tr>
+
+<tr>
+
+<td>ΦΥΛΛΟ</td>
+
+<td>21</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>ΣΧΕΔΙΟ</td>
+
+<td>540402</td>
+
+</tr>
+
+<tr>
+
+<td>ΑΡΙΘΜΟΣ ΤΕΜΑΧΙΟΥ</td>
+
+<td>930</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>SRC_SL_CODE</td>
+
+<td>2</td>
+
+</tr>
+
+<tr>
+
+<td>ΠΗΓΗ</td>
+
+<td>DCDB</td>
+
+</tr>
+
+<tr bgcolor="#D4E4F3">
+
+<td>ΕΜΒΑΔΟ ΤΕΜΑΧΙΟΥ</td>
+
+<td>1172</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>
+
+]]></description>
+      <styleUrl>#PolyStyle00</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> 33.35137797400006,35.15967376600003,0 33.35145779700008,35.15998247100004,0 33.35145372400007,35.15998226700003,0 33.35145510200005,35.15999309200004,0 33.35142711200007,35.15999541400004,0 33.35129845500006,35.16000109400005,0 33.35120089900005,35.15998518600003,0 33.35118783400003,35.15996131800006,0 33.35116027900006,35.15997002300003,0 33.35114492300005,35.15995684500007,0 33.35114336900006,35.15994755600008,0 33.35113683300006,35.15995083800004,0 33.35111035400007,35.15996389500003,0 33.35111254700007,35.15996685900007,0 33.35109898300004,35.15997431500006,0 33.35108427000006,35.15995997200002,0 33.35108730200005,35.15995831300006,0 33.35104364400007,35.15988505800004,0 33.35097935400006,35.15976049800003,0 33.35096874100003,35.15973705200003,0 33.35097337900004,35.15972808800007,0 33.35098356600003,35.15972424000006,0 33.35104400900008,35.15971411600003,0 33.35122238000002,35.15968694900005,0 33.35125971800005,35.15968233200005,0 33.35137797400006,35.15967376600003,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+</Document>
