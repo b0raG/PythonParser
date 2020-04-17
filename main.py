@@ -8,14 +8,6 @@ import zipfile
 import shutil
 from pykml import parser
 
-class Expando(object):
-    pass
-
-    # The class "constructor" - It's actually an initializer 
-    def __init__(self, name):
-        self.Name = name
-
-
 def CSVImporter(items, file):
 
     with open('data/CSV/' + file, 'w', newline='', encoding='utf-8') as csvfile:
