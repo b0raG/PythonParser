@@ -9,18 +9,17 @@ import  openDatabase
 def createTableColumnsScript(fieldNames):
     sqlscript=''
     for fieldName in fieldNames:
-        sqlscript += f'{fieldName.replace(" ", "_").replace("/","_")} VARCHAR(5000000),'
+        sqlscript += f'{fieldName.replace(" ", "_").replace("/","_")} VARCHAR(1200),'
     sqlscript += "Geom geometry"
     return sqlscript
 
 def insertData(reader, tablename, cursor):
-    fieldNamesString = ",".join( val.replace(" ", "_").replace("/","_")  for val in reader.fieldnames)
+    fieldNamesString = ",".join( val.replace(" ", "_").replace("/","_")  for val in reader.fieldnames if val != 'coordinates')
     for row in reader:
-        values = ",".join("'" + val + "'" for val in list(row.values()))
-        sqlString = f"INSERT INTO {tablename} ({fieldNamesString}) VALUES ({values})"
+        values = ",".join("'" + val + "'" for val in list(row.values()) if val != row['coordinates'])
+        sqlString = f"INSERT INTO {tablename} ({fieldNamesString},geom) VALUES ({values}, st_force2d(st_geomfromkml('{row['coordinates']}')))"
         cursor.execute(f'''{sqlString}''')
        
-
 def createTable(tableName, conn):
     #Creating a cursor object using the cursor() method
     cursor = conn.cursor()

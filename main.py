@@ -56,12 +56,18 @@ def Parser(docxml):
             item = {}
             item["Name"] = placemark.name
             try:
-                item["coordinates"] = placemark.MultiGeometry.Polygon.outerBoundaryIs.LinearRing.coordinates
+                item["coordinates"] ='<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>' + placemark.MultiGeometry.Polygon.outerBoundaryIs.LinearRing.coordinates + '</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>'
             except:
                 try:
-                    item["coordinates"] = placemark.Point.coordinates
+                    item["coordinates"] = (
+                    '<Point><coordinates>' + 
+                    placemark.Point.coordinates + 
+                    '</coordinates></Point>')
                 except:
-                    item["coordinates"] = placemark.MultiGeometry.LineString.coordinates
+                    item["coordinates"] = (
+                    '<MultiGeometry><LinearString><coordinates>' + 
+                    placemark.MultiGeometry.LineString.coordinates +
+                    '</coordinates></LinearString></MultiGeometry>')
 
             desc = placemark.description.text
             table = etree.HTML(desc).find("body/table/tr/td/table")
